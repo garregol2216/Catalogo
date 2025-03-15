@@ -30,6 +30,7 @@
             padding: 15px;
             border-radius: 10px;
             width: 300px;
+            cursor: pointer;
         }
         .item img {
             width: 100%;
@@ -40,20 +41,80 @@
             padding: 10px;
             font-size: 14px;
         }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .modal img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 30px;
+            cursor: pointer;
+            color: white;
+        }
     </style>
 </head>
 <body>
     <div class="header">AETHERIA</div>
     <div class="catalogo">
-        <div class="item">
+        <div class="item" onclick="openModal('community.png', 'community_back.png')">
             <img src="community.png" alt="Remera COMMUNITY">
             <p>Modelo COMMUNITY</p>
         </div>
-        <div class="item">
+        <div class="item" onclick="openModal('origin.png', 'origin_back.png')">
             <img src="origin.png" alt="Remera ORIGIN">
             <p>Modelo ORIGIN</p>
         </div>
+        <div class="item" onclick="openModal('origin white.png', 'origin white_back.png')">
+            <img src="origin white.png" alt="Remera ORIGIN WHITE">
+            <p>Modelo ORIGIN WHITE</p>
+        </div>
     </div>
     <div class="footer">Aetheria - COMMUNITY OF BROTHERS</div>
+    
+    <div id="modal" class="modal" onclick="closeModal()">
+        <span class="modal-close">&times;</span>
+        <img id="modal-img" src="" onclick="toggleModalImage(event)">
+    </div>
+
+    <script>
+        let currentFront = '';
+        let currentBack = '';
+        let showingFront = true;
+
+        function openModal(frontSrc, backSrc) {
+            currentFront = frontSrc;
+            currentBack = backSrc;
+            showingFront = true;
+            document.getElementById('modal-img').src = frontSrc;
+            document.getElementById('modal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        function toggleModalImage(event) {
+            event.stopPropagation(); // Evita que se cierre el modal al hacer clic en la imagen
+            showingFront = !showingFront;
+            document.getElementById('modal-img').src = showingFront ? currentFront : currentBack;
+        }
+    </script>
 </body>
 </html>
